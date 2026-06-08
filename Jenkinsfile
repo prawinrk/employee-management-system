@@ -2,29 +2,30 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone') {
+
+        stage('Build & Deploy') {
             steps {
-                git branch: 'main', url: 'https://github.com/prawinrk/employee-management-system'
+                sh '''
+                    docker compose down || true
+                    docker compose up -d --build
+                '''
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Verify') {
             steps {
-                sh 'docker build -t employee-app .'
+                sh 'docker ps'
             }
         }
+    }
 
-        stage('Stop Old Container') {
-            steps {
-                sh 'docker stop employee || true'
-                sh 'docker rm employee || true'
-            }
+    post {
+        success {
+            echo 'Deployment Successful!'
         }
 
-        stage('Run Container') {
-            steps {
-                sh 'docker run -d -p 5000:5000 --name employee employee-app'
-            }
+        failure {
+            echo 'Deployment Failed!'
         }
     }
 }
