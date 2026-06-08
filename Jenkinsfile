@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'YOUR_GITHUB_REPO_URL'
+                git branch: 'main', url: 'https://github.com/prawinrk/employee-management-system'
             }
         }
 
@@ -38,7 +38,7 @@ pipeline {
 
         stage('Clone') {
             steps {
-                git branch: 'main', url: 'YOUR_GITHUB_REPO_URL'
+                git branch: 'main', url: 'https://github.com/prawinrk/employee-management-system'
             }
         }
 
